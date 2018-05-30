@@ -15,7 +15,7 @@ FLUSH PRIVILEGES;"
 
 echo "Create the database to persist the emails:"
 docker exec pacmed-mysql mysql -uroot -prootpass -e \
-"CREATE TABLE IF NOT EXISTS pacmed.emails_with_classification ( id INT NOT NULL AUTO_INCREMENT , email_metadata MEDIUMTEXT NOT NULL , email_subject MEDIUMTEXT NOT NULL , email_body MEDIUMTEXT NOT NULL , is_spam BOOLEAN NOT NULL , PRIMARY KEY (id)) ENGINE = InnoDB;"
+"CREATE TABLE IF NOT EXISTS pacmed.emails_with_classification ( id int(11) NOT NULL, email_metadata mediumtext NOT NULL, email_subject mediumtext NOT NULL, email_body mediumtext NOT NULL, wordcount int(8) DEFAULT NULL, is_spam tinyint(1) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
 
 echo "Add the data to the data/emails-folder:"
 docker exec pacmed-python-application sh -c "wget http://www.aueb.gr/users/ion/data/enron-spam/raw/ham/beck-s.tar.gz -O /www/data/emails/temp.tar.gz && tar xf /www/data/emails/temp.tar.gz -C /www/data/emails && rm /www/data/emails/temp.tar.gz"
