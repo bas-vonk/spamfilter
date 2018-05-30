@@ -2,6 +2,10 @@
 
 This is the code for a mini-cluster that processes emails from the [Enron-Spam](http://www.aueb.gr/users/ion/data/enron-spam/) database. It streams data into both MySQL and ElasticSearch and uses Flask to create a minor web interface to search through the processed emails.
 
+## Prerequisites:
+
+- [Docker](https://www.docker.com)
+
 ## Characteristics:
 
 - It reads data (emails) item by item using a generator function and a Queue system to allow for parallel processing.
@@ -16,8 +20,6 @@ This is the code for a mini-cluster that processes emails from the [Enron-Spam](
 
 ## Usage
 
-- Place the data in ```volumes/python/data```. Data is expected to be textfiles.
+- Run startup.sh ```./startup.sh``` to fire up the the cluster and start streaming the data. If you choose not to, ensure the data (txt-files are in volumes/python/data/emails)
 
-- Run startup.sh ```./startup.sh``` to fire up the the cluster and start streaming the data.
-
-- Code is to be found in the ```volumes/python/code``` folder. The data is predownloaded in the ```volumes/python/data``` folder.
+- Code is to be found in the ```volumes/python/code``` folder. The data is predownloaded in the ```volumes/python/data``` folder by the startup script.
