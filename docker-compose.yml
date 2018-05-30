@@ -1,0 +1,61 @@
+version: '2'
+services:
+
+  pacmed-python-application:
+    container_name: pacmed-python-application
+    build: ./python-container
+    volumes:
+      - ./volumes/python/:/www
+    env_file:
+      - ./python-container/environment.env
+    ports:
+      - "5000:5000"
+    links:
+      - pacmed-elasticsearch
+
+  pacmed-phpmyadmin:
+    container_name: pacmed-phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+       - pacmed-mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: pacmed-mysql
+      PMA_PORT: 3306
+
+  pacmed-mysql:
+    container_name: pacmed-mysql
+    image: mysql:5.6
+    environment:
+      MYSQL_USER: pacmed
+      MYSQL_PASSWORD: pacmed_password
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: pacmed
+    volumes:
+      - ./volumes/mysql/:/var/dump/
+
+  pacmed-kibana:
+    container_name: pacmed-kibana
+    image: docker.elastic.co/kibana/kibana:6.2.4
+    environment:
+      ELASTICSEARCH_URL: "http://pacmed-elasticsearch:9200"
+    ports:
+      - 5601:5601
+
+  pacmed-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: pacmed-elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./volumes/elasticsearch/:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300

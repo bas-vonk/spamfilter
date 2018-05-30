@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Results:</h1>
+    <table border='1'>
+        <tr><th>Id</th><th>Relevance</th><th>Metadata</th><th>Subject</th><th>Body</th><th>IsSpam</th></tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.relevance }}</td>
+            <td>{{ row.metadata }}</td>
+            <td>{{ row.subject }}</td>
+            <td>{{ row.body }}</td>
+            <td>{{ row.isSpam }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

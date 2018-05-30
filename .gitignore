@@ -1,0 +1,4 @@
+*.pyc
+volumes/python/data/emails/*
+volumes/elasticsearch/*
+.DS_Store
