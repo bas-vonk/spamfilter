@@ -1,3 +1,5 @@
 *.pyc
 volumes/elasticsearch/*
+volumes/data/emails/*
+!volumes/data/emails/testemail.txt
 .DS_Store
